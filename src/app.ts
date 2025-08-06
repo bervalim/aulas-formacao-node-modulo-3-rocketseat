@@ -9,9 +9,9 @@ export const app = fastify()
 
 const prisma = new PrismaClient()
 
-prisma.user.create({
-    data: {
-        name: 'Name',
-        email: 'email'
-    }
-})
+// prisma.user.create({
+//     data: {
+//         name: 'Name',
+//         email: 'email'
+//     }
+// })
