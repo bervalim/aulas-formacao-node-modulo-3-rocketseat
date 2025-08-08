@@ -1,17 +1,8 @@
 import fastify from "fastify"
-import { PrismaClient } from '@prisma/client'
-
+import { appRoutes } from "./http/routes"
 
 export const app = fastify()
 
-// Criando conexão com Banco de dados.
-// Para isso, basta instanciar o PrismaClient
+app.register(appRoutes)
 
-const prisma = new PrismaClient()
 
-// prisma.user.create({
-//     data: {
-//         name: 'Name',
-//         email: 'email'
-//     }
-// })
