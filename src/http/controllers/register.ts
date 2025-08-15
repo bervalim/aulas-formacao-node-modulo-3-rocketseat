@@ -19,7 +19,8 @@ export async function registerController(
   try {
     const usersRepository = new PrismaUsersRepository();
     const userService = new UserService(usersRepository);
-    await userService.create({ name, email, password });
+    const user = await userService.create({ name, email, password });
+    return reply.status(201).send(user);
   } catch (error) {
     if(error instanceof UserAlreadyExistsError){
       return reply.status(409).send({ message: error.message })
@@ -28,6 +29,4 @@ export async function registerController(
     throw  error
 
   }
-
-  return reply.status(201).send();
 }
