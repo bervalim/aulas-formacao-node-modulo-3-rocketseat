@@ -4,7 +4,6 @@ import { hash } from "bcryptjs";
 import { GetUserProfileService } from "./get-user-profile";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
-
 let usersRepository: InMemoryUsersRepository
 let sut: GetUserProfileService
 
@@ -31,7 +30,7 @@ describe('Get User Profile Use Case', () => {
     })
 
     it('should not able to get user profile with wrong id',  async () => {
-        expect(() => sut.execute({
+        await expect(() => sut.execute({
             userId: 'non-existing-id'
         })).rejects.toBeInstanceOf(ResourceNotFoundError)
 
