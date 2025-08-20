@@ -11,7 +11,7 @@
 - [] Deve ser possível o usuário obter o histórico de checkins
 - [] Deve ser possível o usuário buscar academias próximas
 - [] Deve ser possível o usuário buscar academias pelo nome
-- [] Deve ser possível o usuário realizar checkin em uma academia
+- [X] Deve ser possível o usuário realizar checkin em uma academia
 - [] Deve ser possível validar o checkin de um usuário (Em algumas academias, o checkin é validado de forma manual, não necessariamente é uma rota separada)
 - [] Deve ser possível cadastrar uma academia 
 
