@@ -18,7 +18,7 @@
 <!-- Regras de Negócio-->
 <!-- Condições para cada regra de negócio (ifs) -->
 - [X] Usuário não deve pode se cadastrar com um e-mail duplicado
-- [] Usuário não pode fazer dois checkins no mesmo dia
+- [X] Usuário não pode fazer dois checkins no mesmo dia
 - [] Usuário não pode fazer checkin se não estiver a pelo menos 100m da academia
 - [] O check-in só pode ser validado até 20min após criado
 - [] O check-in só pode ser validado por administradores
