@@ -20,24 +20,27 @@ export class InMemoryCheckinRepository implements CheckinsRepository {
          return checkin
     }
 
-  async findByUserIdOnDate(userId: string, date: Date) {
-    // 2023-02-28T15:30
-    const startOfTheDay = dayjs(date).startOf('date');
-    // Vai retornar o ínicio do dia. ex: 
-    const endOfTheDay = dayjs(date).endOf('date')
+    async findByUserIdOnDate(userId: string, date: Date) {
+      const startOfTheDay = dayjs(date).startOf('date');
+      const endOfTheDay = dayjs(date).endOf('date')
 
-    const checkinOnSameDate = this.items.find(
-      (checkin) => {
-        const checkInDate = dayjs(checkin.created_at)
-        // Validar se a data está no intervalo entre duas outras datas
-        const isOnSameDate = checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
-        return checkin.userId === userId && isOnSameDate
-      } 
-    );
+      const checkinOnSameDate = this.items.find(
+        (checkin) => {
+          const checkInDate = dayjs(checkin.created_at)
+          const isOnSameDate = checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
+          return checkin.userId === userId && isOnSameDate
+        } 
+      );
 
-    if (!checkinOnSameDate) return null;
+      if (!checkinOnSameDate) return null;
 
-    return checkinOnSameDate;
-  }
+      return checkinOnSameDate;
+    }
+    
+    async findManyByUserId(userId: string, page: number) {
+      return this.items
+      .filter((item)=> item.userId === userId)
+      .slice((page -1) * 20, page * 20)
+    }
     
 }
