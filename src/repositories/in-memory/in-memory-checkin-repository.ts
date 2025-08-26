@@ -4,48 +4,65 @@ import { randomUUID } from "node:crypto";
 import dayjs from "dayjs";
 
 export class InMemoryCheckinRepository implements CheckinsRepository {
-    public items: Checkin[] = []
+  public items: Checkin[] = [];
 
-    async create(data: Prisma.CheckinUncheckedCreateInput) {
-         const checkin =  {
-           id: randomUUID(),
-           userId: data.userId,
-           gymId: data.gymId,
-           validated_at: data.validated_at ? new Date(data.validated_at) : null,
-           created_at: new Date(),
-         };
+  async findById(id: string) {
+    const checkIn = this.items.find((item) => item.id === id);
 
-         this.items.push(checkin)
-
-         return checkin
+    if (!checkIn) {
+      return null;
     }
 
-    async findByUserIdOnDate(userId: string, date: Date) {
-      const startOfTheDay = dayjs(date).startOf('date');
-      const endOfTheDay = dayjs(date).endOf('date')
+    return checkIn;
+  }
 
-      const checkinOnSameDate = this.items.find(
-        (checkin) => {
-          const checkInDate = dayjs(checkin.created_at)
-          const isOnSameDate = checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
-          return checkin.userId === userId && isOnSameDate
-        } 
-      );
+  async create(data: Prisma.CheckinUncheckedCreateInput) {
+    const checkin = {
+      id: randomUUID(),
+      userId: data.userId,
+      gymId: data.gymId,
+      validated_at: data.validated_at ? new Date(data.validated_at) : null,
+      created_at: new Date(),
+    };
 
-      if (!checkinOnSameDate) return null;
+    this.items.push(checkin);
 
-      return checkinOnSameDate;
+    return checkin;
+  }
+
+  async findByUserIdOnDate(userId: string, date: Date) {
+    const startOfTheDay = dayjs(date).startOf("date");
+    const endOfTheDay = dayjs(date).endOf("date");
+
+    const checkinOnSameDate = this.items.find((checkin) => {
+      const checkInDate = dayjs(checkin.created_at);
+      const isOnSameDate =
+        checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay);
+      return checkin.userId === userId && isOnSameDate;
+    });
+
+    if (!checkinOnSameDate) return null;
+
+    return checkinOnSameDate;
+  }
+
+  async findManyByUserId(userId: string, page: number) {
+    return this.items
+      .filter((item) => item.userId === userId)
+      .slice((page - 1) * 20, page * 20);
+  }
+
+  async countByUserId(userId: string) {
+    return this.items.filter((item) => item.userId === userId).length;
+  }
+
+  async save(checkIn: Checkin) {
+    const checkinIndex = this.items.findIndex(item => item.id === checkIn.id);
+
+    if (checkinIndex >= 0) {
+      this.items[checkinIndex] = checkIn;
     }
-    
-    async findManyByUserId(userId: string, page: number) {
-      return this.items
-      .filter((item)=> item.userId === userId)
-      .slice((page -1) * 20, page * 20)
-    }
 
-     async countByUserId(userId: string) {
-      return this.items
-        .filter((item)=> item.userId === userId).length
-     }
-    
+    return checkIn;
+  }
 }
