@@ -28,9 +28,8 @@ export default <Environment>{
 
     process.env.DATABASE_URL = databaseURL
 
-    execSync('npx prisma db push --force-reset', {
-        stdio: 'inherit'
-        })
+
+    execSync('npx prisma db push')
 
     return {
       async teardown() {
