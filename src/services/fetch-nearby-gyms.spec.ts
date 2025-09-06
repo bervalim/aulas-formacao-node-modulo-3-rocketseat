@@ -1,6 +1,5 @@
 import { InMemoryGymsRepository } from "@/repositories/in-memory/in-memory-gyms-repository"
 import { expect, it, describe, beforeEach } from "vitest"
-import { SearchGymsService } from "./search-gyms"
 import { FetchNearByGymsService } from "./fetch-nearby-gyms"
 
 let gymsRepository: InMemoryGymsRepository

@@ -2,6 +2,7 @@ import { afterAll, beforeAll, expect, it, test } from "vitest";
 import request from "supertest"
 import { app } from "@/app";
 import { describe } from "node:test";
+import { createAndAuthenticateUser } from "@/utils/test/create-and-authenticate-user";
 
 describe('Profile Controller', ()=> {
     beforeAll(async ()=> {
@@ -13,22 +14,7 @@ describe('Profile Controller', ()=> {
     })
 
     it('should be to get user profile', async () => {
-        await request(app.server)
-            .post('/users')
-            .send({
-                name: 'John Doe',
-                email: 'johndoe@example.com',
-                password: '123456'
-            })
-
-        const authResponse = await request(app.server)
-        .post('/sessions')
-        .send({
-            email: 'johndoe@example.com',
-            password: '123456'
-        })
-
-        const { token } = authResponse.body
+       const { token }  = await createAndAuthenticateUser(app)
 
         const profileResponse = await request(app.server)
             .get("/me")

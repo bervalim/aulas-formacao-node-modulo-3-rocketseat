@@ -1,6 +1,5 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import z from "zod";
-import { UserAlreadyExistsError } from "@/services/errors/user-already-exists.error";
 import { makeCreateGymService } from "@/services/factories/make-create-gym-service";
 
 export async function createController(
@@ -32,6 +31,6 @@ export async function createController(
     latitude,
     longitude,
   });
-  return reply.status(201).send();
+  return reply.status(200).send();
 
 }
