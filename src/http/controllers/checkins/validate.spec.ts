@@ -16,7 +16,7 @@ describe('Validate Checkin Controller', ()=> {
     })
 
     it("should be to validate a checkin", async () => {
-      const { token } = await createAndAuthenticateUser(app);
+      const { token } = await createAndAuthenticateUser(app, true);
 
       const user = await prisma.user.findFirstOrThrow();
 
