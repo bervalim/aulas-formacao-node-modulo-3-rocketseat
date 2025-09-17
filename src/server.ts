@@ -8,3 +8,5 @@ app.listen({
 }).then(()=>{
     console.log('Server is Running')
 })
+
+console.log('test')
